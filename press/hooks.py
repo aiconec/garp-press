@@ -3,13 +3,24 @@ from press.api.account import get_frappe_io_auth_url
 from . import __version__ as app_version
 
 app_name = "press"
-app_title = "Press"
-app_publisher = "Frappe"
-app_description = "Managed Frappe Hosting"
+app_title = "GARP Press"
+app_icon_title = "Press"
+app_publisher = "Aiconec GARP"
+app_description = "GARP Managed Hosting Platform"
 app_icon = "octicon octicon-rocket"
 app_color = "grey"
-app_email = "aditya@frappe.io"
+app_email = "engineering@aiconec.com"
 app_license = "GNU Affero General Public License v3.0"
+
+add_to_apps_screen = [
+	{
+		"name": "press",
+		"logo": "/assets/press/images/garp-press-icon.svg",
+		"title": "Press",
+		"route": "/dashboard",
+		"has_permission": "press.api.account.has_app_permission",
+	}
+]
 version = app_version
 
 # Includes in <head>

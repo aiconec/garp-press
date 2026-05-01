@@ -1442,3 +1442,7 @@ STATE_PINCODE_MAPPING = {
 	"Andaman and Nicobar Islands": (744, 744),
 	"Andhra Pradesh": (500, 535),
 }
+
+
+def has_app_permission():
+	return frappe.db.exists("Team", {"user": frappe.session.user}) or "System Manager" in frappe.get_roles()

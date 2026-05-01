@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "press"
 dynamic = ["version"]
-description = "Managed Frappe Hosting"
+description = "GARP Managed Hosting Platform"
 authors = [
-    {name = "Frappe", email = "aditya@erpnext.com"}
+    {name = "Aiconec GARP", email = "engineering@aiconec.com"}
 ]
 readme = "README.md"
 license = {text = "AGPL-3.0"}
