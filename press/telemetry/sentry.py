@@ -25,4 +25,8 @@ def set_context(key: str, value: dict):
 
 
 def add_user_context():
-	set_context("user_details", get_user_details())
+	# Wrap whole call: get_user_details() can raise AuthenticationError when
+	# the request user is not part of a press Team. set_context() suppresses
+	# its own exceptions but is not reached if get_user_details() throws.
+	with contextlib.suppress(Exception):
+		set_context("user_details", get_user_details())
