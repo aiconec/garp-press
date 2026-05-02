@@ -968,11 +968,13 @@ def redirect_to(location):
 def get_frappe_io_auth_url() -> str | None:
 	"""Get auth url for oauth login with frappe.io."""
 
+	# Called at hooks.py module load → safe no-op when no Frappe context
+	# (e.g. during `bench build` in Docker where no site/DB exists).
 	try:
 		provider = frappe.get_last_doc(
 			"Social Login Key", filters={"enable_social_login": 1, "provider_name": "Frappe"}
 		)
-	except DoesNotExistError:
+	except (DoesNotExistError, RuntimeError):
 		return None
 
 	if (
