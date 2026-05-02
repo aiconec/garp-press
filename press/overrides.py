@@ -148,7 +148,14 @@ def has_permission(doc, ptype, user):
 	if ptype == "create":
 		return True
 
-	team = get_current_team()
+	# Users not enrolled in a press Team have no access to press docs.
+	# Return False instead of letting AuthenticationError propagate up
+	# into Frappe's permission framework (which surfaces as a UI popup
+	# error on every page that touches a press doctype).
+	try:
+		team = get_current_team()
+	except frappe.AuthenticationError:
+		return False
 	child_team_members = [d.name for d in frappe.db.get_all("Team", {"parent_team": team}, ["name"])]
 	if doc.team == team or doc.team in child_team_members:
 		return True
@@ -169,7 +176,13 @@ def get_permission_query_conditions_for_doctype_and_user(doctype, user):
 	if user_type == "System User":
 		return ""
 
-	team = get_current_team()
+	# See has_permission above — non-System users without a press Team
+	# get a no-rows filter so list queries return empty cleanly instead
+	# of bubbling up a "not part of any team" error to the UI.
+	try:
+		team = get_current_team()
+	except frappe.AuthenticationError:
+		return "1=0"
 
 	return f"(`tab{doctype}`.`team` = {frappe.db.escape(team)})"
 
