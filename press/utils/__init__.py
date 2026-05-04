@@ -146,6 +146,13 @@ def get_current_team(get_doc=False) -> Team | str:
 		team = get_default_team_for_user(frappe.session.user)
 
 	if not team:
+		if system_user:
+			# System users without a Press team (e.g. GARP ERP admins who are not
+			# Press customers) should not see a UI error. Raise AuthenticationError
+			# silently so callers that wrap get_current_team in try/except can
+			# suppress it, and callers that don't will get a clean 403 with no
+			# user-visible message dialog.
+			raise frappe.AuthenticationError
 		frappe.throw(
 			f"User {frappe.session.user} is not part of any team",
 			frappe.AuthenticationError,
