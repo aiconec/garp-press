@@ -94,11 +94,29 @@ def hook():  # noqa: C901
 					return
 			if path in ALLOWED_PATHS:
 				return
+			if is_allowed_custom_endpoint(path):
+				return
 
 			log(path, user_type)
 			frappe.throw("Access not allowed for this URL", frappe.AuthenticationError)
 
 	return
+
+
+def is_allowed_custom_endpoint(path):
+	"""GARP: this bench hosts other apps' guest endpoints (e.g. the office-lounge public
+	scanner), which this hook would otherwise block bench-wide. Mirror lms.auth's escape
+	hatch: site_config `allowed_custom_endpoints` lists extra guest-accessible paths."""
+	allowed_custom_endpoints = frappe.conf.get("allowed_custom_endpoints", [])
+
+	if isinstance(allowed_custom_endpoints, str):
+		try:
+			parsed = json.loads(allowed_custom_endpoints)
+			allowed_custom_endpoints = parsed if isinstance(parsed, list) else [allowed_custom_endpoints]
+		except Exception:
+			allowed_custom_endpoints = [allowed_custom_endpoints]
+
+	return any(endpoint and path.startswith(endpoint) for endpoint in allowed_custom_endpoints)
 
 
 def log(path, user_type):
