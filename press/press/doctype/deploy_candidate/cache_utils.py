@@ -10,12 +10,19 @@ from pathlib import Path
 from textwrap import dedent
 from typing import Tuple, TypedDict
 
+# Dict form, not keywords: the keyword signature of TypedDict was deprecated in
+# Python 3.11 and REMOVED in 3.13, so on 3.14 it raises
+# "TypeError: TypedDict() got an unexpected keyword argument 'cwd'" at import.
+# That aborted every `bench migrate` on this bench, silently -- the deploy script
+# logs "bench migrate failed (continuing)" and carries on green.
 CommandOutput = TypedDict(
 	"CommandOutput",
-	cwd=str,
-	image_tag=str,
-	returncode=int,
-	output=str,
+	{
+		"cwd": str,
+		"image_tag": str,
+		"returncode": int,
+		"output": str,
+	},
 )
 
 
