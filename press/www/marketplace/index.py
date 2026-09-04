@@ -64,7 +64,7 @@ def get_context(context):
 		frappe.db.get_all("Marketplace App Categories", pluck="category", distinct=True)
 	)
 	context.metatags = {
-		"title": "GARP Marketplace",
+		"title": "Frappe Cloud Marketplace",
 		"description": "One Click Apps for your Frappe Sites",
 		"og:type": "website",
 	}

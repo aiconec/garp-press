@@ -11,8 +11,6 @@ app_icon = "octicon octicon-rocket"
 app_color = "grey"
 app_email = "engineering@aiconec.com"
 app_license = "GNU Affero General Public License v3.0"
-# AGPL/GPL source offer: the corresponding source of THIS modified version.
-source_link = "https://github.com/aiconec/garp-press"
 
 add_to_apps_screen = [
 	{
