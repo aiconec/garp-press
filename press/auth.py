@@ -49,6 +49,7 @@ ALLOWED_PATHS = [
 	"/api/method/frappe.core.doctype.user.user.test_password_strength",
 	"/api/method/frappe.core.doctype.user.user.update_password",
 	"/api/method/frappe.core.doctype.user.user.reset_password",
+	"/api/method/frappe.www.login.send_login_link",
 	"/api/method/get_central_migration_data",
 ]
 
