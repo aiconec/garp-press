@@ -120,7 +120,10 @@ class DowntimeAnalysis(Document):
 		raise NotImplementedError
 
 	def delete(self):
-		raise NotImplementedError
+		# Virtual doctype: no rows exist, so deletion is a no-op. Raising here
+		# (the old behaviour) aborts `bench uninstall-app press`, which deletes
+		# every doctype of the app and calls this in the process.
+		pass
 
 	@staticmethod
 	def get_list(filters=None, page_length=20, **kwargs):

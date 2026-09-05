@@ -65,7 +65,10 @@ class InspectTraceID(Document):
 		raise NotImplementedError
 
 	def delete(self):
-		raise NotImplementedError
+		# Virtual doctype: no rows exist, so deletion is a no-op. Raising here
+		# (the old behaviour) aborts `bench uninstall-app press`, which deletes
+		# every doctype of the app and calls this in the process.
+		pass
 
 	def db_insert(self, *args, **kwargs):
 		raise NotImplementedError
