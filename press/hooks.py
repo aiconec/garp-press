@@ -6,11 +6,14 @@ app_name = "press"
 app_title = "GARP Stack"
 app_icon_title = "Press"
 app_publisher = "Aiconec GARP"
-app_description = "GARP Managed Hosting Platform"
+app_description = "GARP Stack — managed hosting and site operations"
 app_icon = "octicon octicon-rocket"
 app_color = "grey"
 app_email = "engineering@aiconec.com"
 app_license = "GNU Affero General Public License v3.0"
+# AGPL-3.0 section 13: this app is a modified version served over a network,
+# so its users are owed the corresponding source of THIS version.
+source_link = "https://github.com/aiconec/garp-press"
 
 add_to_apps_screen = [
 	{
